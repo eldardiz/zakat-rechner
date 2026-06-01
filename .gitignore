@@ -1,0 +1,6 @@
+node_modules/
+scrape/*.png
+screenshots/*.png
+.vercel
+.DS_Store
+*.log
