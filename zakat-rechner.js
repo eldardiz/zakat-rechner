@@ -129,6 +129,17 @@
       if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    // Build the donate link with the calculated Zakat prefilled as the amount.
+    // Works with relative ("/spendenformular?fb_item_id=88470") or absolute URLs.
+    // If Fundraisingbox ignores the amount param the link still works (purpose only).
+    donateHref(amount) {
+      if (!this.donateUrl || this.donateUrl === '#') return '#';
+      const amt = Math.round((Number(amount) || 0) * 100) / 100;
+      if (amt <= 0) return this.donateUrl;
+      const sep = this.donateUrl.includes('?') ? '&' : '?';
+      return `${this.donateUrl}${sep}amount=${amt.toFixed(2)}`;
+    }
+
     // --- Render -----------------------------------------------------------
     render() {
       const st = this.state.step;
@@ -351,7 +362,7 @@
           ${t.above
             ? `<div class="calc"><span>2,5 %</span><span class="x">×</span><span>${fmtEUR(t.net)}</span></div>
                <div class="due"><span>Zu entrichtende Zakat</span><b>${fmtEUR(t.zakat)}</b></div>
-               <a class="btn primary big" href="${this.donateUrl}" ${this.donateUrl !== '#' ? 'target="_top"' : ''}>Zakat zahlen</a>`
+               <a class="btn primary big" href="${this.donateHref(t.zakat)}" ${this.donateUrl !== '#' ? 'target="_top"' : ''}>Zakat zahlen</a>`
             : `<div class="due muted2"><span>Zu entrichtende Zakat</span><b>${fmtEUR(0)}</b></div>`}
         </div>
         <div class="nav">

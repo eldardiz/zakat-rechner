@@ -1,52 +1,80 @@
-# Zakat-Rechner
+# Human Relief widgets — Zakat-Rechner + Schnell-Spenden
 
-Self-contained, multi-step Zakat calculator (German / EUR), built as a Web
-Component with Shadow DOM so it can be dropped into any site — including Webflow
-— without CSS conflicts. 1:1 replica of the MATW calculator flow.
+Two self-contained Web Components (Shadow DOM, no CSS conflicts) hosted from one
+Vercel deploy and embedded into the Human Relief Webflow site via HTML Embed.
 
-## Flow (4 steps)
-1. **Vermögen** – select asset categories (Bargeld, Gold & Silber, Krypto, Aktien, Sonstige/Immobilien)
-2. **Beträge** – per-category amounts (cash sub-fields, gold/silver with karat + EUR/Gramm toggle + add-more rows, crypto, shares, business assets, real estate with residence-exemption note)
-3. **Abzüge** – liabilities, subtracted from assets
-4. **Ergebnis** – asset breakdown, Gesamtvermögen, Silber/Gold-Nisab toggle, Nettovermögen, above/below-Nisab badge, **2,5 % → Zu entrichtende Zakat**, "Zakat zahlen" CTA
+- `zakat-rechner.js` — multi-step Zakat calculator (German / EUR).
+- `quick-donate.js` — homepage quick-donate picker (purpose + amount + once/monthly).
 
-## Embed in Webflow
-Add an **HTML Embed** element where the calculator should appear:
+Both build a **Fundraisingbox** deep link via URL params, so they need no FRB
+account or API key. Donation form base: `/spendenformular?fb_item_id=<id>`.
+
+## Zakat-Rechner
+
+4 steps: **Vermögen** (pick categories) → **Beträge** (cash, gold/silver with
+karat + EUR/Gramm toggle, crypto, shares, business/real-estate) → **Abzüge**
+(liabilities) → **Ergebnis** (breakdown, Silber/Gold-Nisab toggle, above/below
+badge, 2,5 % → Zu entrichtende Zakat, "Zakat zahlen" CTA).
+
+The "Zakat zahlen" button links to `data-donate-url` with the **calculated
+amount appended** (`&amount=<zakat>`), so the donation form prefills. If
+Fundraisingbox ignores the amount param the link still works (purpose only).
 
 ```html
 <div data-zakat-rechner
      data-gold-price="95.00"
      data-silver-price="2.10"
-     data-accent="#0e7c66"
-     data-donate-url="https://your-site.org/spenden?zweck=zakat"></div>
+     data-accent="#317FC2"
+     data-donate-url="/spendenformular?fb_item_id=88470"></div>
 <script src="https://YOUR-VERCEL-DEPLOY.vercel.app/zakat-rechner.js" defer></script>
 ```
 
-### Config attributes
 | Attribute | Meaning | Default |
 |---|---|---|
-| `data-gold-price` | Gold price €/g (24k) — used for gram→€ conversion **and** the Gold-Nisab | `95.00` |
-| `data-silver-price` | Silver price €/g (fine) — used for gram→€ conversion **and** the Silber-Nisab | `2.10` |
-| `data-accent` | Brand accent color (match the client's site) | `#0e7c66` |
-| `data-donate-url` | Where "Zakat zahlen" links (deep-link to the donation form / Zakat purpose) | `#` |
+| `data-gold-price` | Gold €/g (24k) — gram→€ conversion **and** Gold-Nisab | `95.00` |
+| `data-silver-price` | Silver €/g (fine) — gram→€ conversion **and** Silber-Nisab | `2.10` |
+| `data-accent` | Brand accent (Human Relief blue) | `#0e7c66` |
+| `data-donate-url` | Zakat donation deep link (FRB item 88470) | `#` |
 
-> **Keep the prices current.** Nisab is computed live from `data-gold-price`
-> and `data-silver-price`. Update those two attributes in Webflow whenever the
-> metal price moves materially. (A live price feed is a possible v2.)
+> **Keep the prices current.** Nisab is computed live from `data-gold-price` and
+> `data-silver-price`. Update those two attributes in the Webflow embed whenever
+> the metal price moves materially (note the "Preise Stand <date>" on the page).
 
-## Fiqh constants (in `src/zakat-rechner.js`)
-- Zakat rate: **2,5 %**
-- Gold Nisab: **87,48 g** · Silver Nisab: **612,36 g**
-- Gold purity factors (24/22/21/18/14k) and silver purity (999/925/900) for gram entry
+## Quick-Donate (Schnell-Spenden)
+
+Once/monthly toggle · 10/25/50/100 € + free amount · purpose dropdown ·
+"Jetzt sicher spenden". Builds `<base>?fb_item_id=<id>&interval=<1 if monthly>&amount=<X>`.
+
+```html
+<div data-quick-donate
+     data-accent="#317FC2"
+     data-base="/spendenformular"></div>
+<script src="https://YOUR-VERCEL-DEPLOY.vercel.app/quick-donate.js" defer></script>
+```
+
+| Attribute | Meaning | Default |
+|---|---|---|
+| `data-accent` | Brand accent | `#317FC2` |
+| `data-base` | Donation form base path | `/spendenformular` |
+
+Active purposes (edit the `PURPOSES` array in `quick-donate.js`): 88485 Allgemeine,
+88397 Gaza, 96560 Wasserbrunnen, 88482 Waisenpatenschaft (monthly), 88474 Malawi,
+88470 Zakat, 88471 Sadaqa.
+
+## Fiqh constants (`zakat-rechner.js`)
+- Zakat rate **2,5 %** · Gold Nisab **87,48 g** · Silver Nisab **612,36 g**
+- Gold purity 24/22/21/18/14k · silver 999/925/900 for gram entry.
 
 ## Local dev
 ```bash
-python3 -m http.server 4178   # then open http://localhost:4178
-node test.mjs                 # Playwright walk-through of every step + math checks
+python3 -m http.server 4178   # open http://localhost:4178 (both widgets)
+node test.mjs                 # Playwright walk-through + math checks
 ```
 
 ## Files
-- `src/zakat-rechner.js` – the widget (this is what gets hosted/embedded)
-- `index.html` – preview/test harness (mirrors the Webflow embed snippet)
-- `test.mjs` – Playwright test suite (20 assertions)
-- `scrape/` – reference-extraction scripts used to replicate MATW (not shipped)
+- `zakat-rechner.js` — Zakat calculator widget (hosted/embedded)
+- `quick-donate.js` — quick-donate widget (hosted/embedded)
+- `index.html` — preview/test harness (both widgets, links to the live form)
+- `vercel.json` — static host config (CORS + cache on `.js`)
+- `test.mjs` — Playwright suite (20 assertions)
+- `scrape/` — reference-extraction scripts (not shipped)
