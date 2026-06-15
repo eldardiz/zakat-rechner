@@ -82,7 +82,6 @@
               <button class="rb ${s.interval === 0 ? 'on' : ''}" data-int="0">Einmalig</button>
               <button class="rb ${s.interval === 1 ? 'on' : ''}" data-int="1">Monatlich</button>
             </div>
-            <div class="cur"><span class="flag">&#127466;&#127482;</span> EUR</div>
             <div class="free">
               <input type="text" inputmode="decimal" placeholder="Betrag" value="${s.custom}" data-custom aria-label="Freier Betrag in Euro"/>
               <span class="cuk">&euro;</span>
