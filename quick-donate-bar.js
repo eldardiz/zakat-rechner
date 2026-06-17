@@ -28,7 +28,7 @@
     { id: '88397', label: 'Nothilfe Gaza' },
     { id: '96560', label: 'Wasserbrunnen' },
     { id: '88481', label: 'Waisen' },
-    { id: '88474', label: 'Malawi-Waisenhauskomplex' },
+    { id: '88474', label: 'Malawi-Waisenkomplex' },
     { id: '88470', label: 'Zakat' },
     { id: '88471', label: 'Sadaqa' },
   ];
