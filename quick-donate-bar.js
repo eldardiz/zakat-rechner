@@ -27,7 +27,7 @@
     { id: '88485', label: 'Wo Hilfe am dringendsten gebraucht wird' },
     { id: '88397', label: 'Nothilfe Gaza' },
     { id: '96560', label: 'Wasserbrunnen' },
-    { id: '88482', label: 'Waisenpatenschaft', interval: 1 },
+    { id: '88481', label: 'Waisen' },
     { id: '88474', label: 'Malawi-Waisenhauskomplex' },
     { id: '88470', label: 'Zakat' },
     { id: '88471', label: 'Sadaqa' },
