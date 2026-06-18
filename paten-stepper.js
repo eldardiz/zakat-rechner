@@ -23,7 +23,9 @@
     }
     cur() { return C.find((x) => x.id === this.s.id); }
     total() { return this.cur().cost * this.s.n; }
-    href() { return `${this.base}?fb_item_id=${this.s.id}&amount=${this.total()}&interval=1`; }
+    // amount_fix + interval_fix LOCK the Betrag and the monthly rhythm on the FRB form
+    // (the donor already chose the number of children here, so the total is fixed).
+    href() { return `${this.base}?fb_item_id=${this.s.id}&amount_fix=${this.total()}&interval_fix=1`; }
     render() {
       const a = this.accent;
       this.shadowRoot.innerHTML = `
