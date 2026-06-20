@@ -23,9 +23,10 @@
     }
     cur() { return C.find((x) => x.id === this.s.id); }
     total() { return this.cur().cost * this.s.n; }
-    // amount_fix + interval_fix LOCK the Betrag and the monthly rhythm on the FRB form
-    // (the donor already chose the number of children here, so the total is fixed).
-    href() { return `${this.base}?fb_item_id=${this.s.id}&amount_fix=${this.total()}&interval_fix=1`; }
+    // fb_item_id_fix LOCKS the project (country, so the backoffice always shows the
+    // right Waisenpatenschaft and the donor can't switch it); amount_fix + interval_fix
+    // LOCK the Betrag and the monthly rhythm (donor already chose the number of children).
+    href() { return `${this.base}?fb_item_id_fix=${this.s.id}&amount_fix=${this.total()}&interval_fix=1`; }
     render() {
       const a = this.accent;
       this.shadowRoot.innerHTML = `
@@ -63,7 +64,7 @@
             <div class="tot"><b>${this.total()} &euro;</b><span>${this.s.n} &times; ${this.cur().cost} &euro; &middot; monatlich</span></div>
           </div>
           <a class="go" href="${this.href()}" target="_top">Patenschaft starten</a>
-          <div class="meta">Monatlich und jederzeit k&uuml;ndbar &middot; steuerlich absetzbar<br>Lieber flexibel? <a href="${this.base}?fb_item_id=${FONDS}">Zum Waisenfonds</a></div>
+          <div class="meta">Monatlich und jederzeit k&uuml;ndbar &middot; steuerlich absetzbar<br>Lieber flexibel? <a href="${this.base}?fb_item_id_fix=${FONDS}">Zum Waisenfonds</a></div>
         </div>`;
       this.shadowRoot.querySelectorAll('.pill').forEach((p) => (p.onclick = () => { this.s.id = p.dataset.c; this.render(); }));
       this.shadowRoot.querySelectorAll('[data-d]').forEach((b) => (b.onclick = () => { this.s.n = Math.max(1, this.s.n + parseInt(b.dataset.d, 10)); this.render(); }));

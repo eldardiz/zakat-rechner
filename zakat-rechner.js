@@ -146,11 +146,14 @@
       if (!this.donateUrl || this.donateUrl === '#') return '#';
       const amt = Math.round((Number(amount) || 0) * 100) / 100;
       if (amt <= 0) return this.donateUrl;
-      const sep = this.donateUrl.includes('?') ? '&' : '?';
+      // Lock the project too: fb_item_id= → fb_item_id_fix= so the donor can't
+      // switch away from Zakat on the form.
+      const base = this.donateUrl.replace(/fb_item_id=/, 'fb_item_id_fix=');
+      const sep = base.includes('?') ? '&' : '?';
       // Zakat is a one-time obligation → interval=0. amount_fix LOCKS the exact
       // calculated Zakat on the FRB form (verified: sets payment[amount]).
       // NB: plain amount= is ignored by this form; only amount_fix prefills.
-      return `${this.donateUrl}${sep}amount_fix=${amt.toFixed(2)}&interval=0`;
+      return `${base}${sep}amount_fix=${amt.toFixed(2)}&interval=0`;
     }
 
     // --- Render -----------------------------------------------------------

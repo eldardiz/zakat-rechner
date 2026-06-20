@@ -43,9 +43,9 @@
     }
     cur() { return C.find((x) => x.name === this.s.name); }
     total() { return this.cur().price * this.s.n; }
-    // amount_fix locks the Betrag (donor already chose the well + quantity here);
-    // interval=0 = one-time (a well is a one-time gift, not monthly).
-    href() { return `${this.base}?fb_item_id=${this.cur().id}&amount_fix=${this.total()}&interval=0`; }
+    // fb_item_id_fix LOCKS the project (donor can't switch the well on the form);
+    // amount_fix LOCKS the amount; interval=0 = one-time (a well is not monthly).
+    href() { return `${this.base}?fb_item_id_fix=${this.cur().id}&amount_fix=${this.total()}&interval=0`; }
     render() {
       const a = this.accent;
       this.shadowRoot.innerHTML = `
@@ -83,7 +83,7 @@
             <div class="tot"><b>${fmt(this.total())} &euro;</b><span>${this.s.n} &times; ${fmt(this.cur().price)} &euro; &middot; einmalig</span></div>
           </div>
           <a class="go" href="${this.href()}" target="_top">Brunnen finanzieren</a>
-          <div class="meta">Einmalige Spende &middot; steuerlich absetzbar<br>Lieber einen Anteil geben? <a href="${this.base}?fb_item_id=${FONDS}">Zum Brunnenfonds</a></div>
+          <div class="meta">Einmalige Spende &middot; steuerlich absetzbar<br>Lieber einen Anteil geben? <a href="${this.base}?fb_item_id_fix=${FONDS}">Zum Brunnenfonds</a></div>
         </div>`;
       this.shadowRoot.querySelectorAll('.pill').forEach((p) => (p.onclick = () => { this.s.name = p.dataset.c; this.render(); }));
       this.shadowRoot.querySelectorAll('[data-d]').forEach((b) => (b.onclick = () => { this.s.n = Math.max(1, this.s.n + parseInt(b.dataset.d, 10)); this.render(); }));
