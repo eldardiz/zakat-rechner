@@ -51,10 +51,6 @@
     constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      this.goldPrice = num(this.getAttribute('data-gold-price')) || 95.0;     // €/g 24k
-      this.silverPrice = num(this.getAttribute('data-silver-price')) || 2.10; // €/g pure
-      this.donateUrl = this.getAttribute('data-donate-url') || '#';
-      this.accent = this.getAttribute('data-accent') || '#0e7c66';
       this.state = this.initialState();
     }
 
@@ -76,7 +72,21 @@
 
     reset() { this.state = this.initialState(); this.render(); this.scrollTop(); }
 
-    connectedCallback() { this.render(); }
+    connectedCallback() {
+      // Read attributes HERE, not in the constructor: during mount() the wrapper's
+      // data-* attributes are copied onto this element AFTER createElement() has
+      // already run the constructor, so the constructor sees none of them
+      // (that made donateUrl fall back to '#' and the prices to defaults).
+      // Prices are config attributes (plain floats like "125.00" / "1.90"), not
+      // German user input, so parse with parseFloat, NOT num() (num treats "." as a
+      // thousands separator and would read "1.90" as 190). Accept a comma too.
+      const price = (v) => parseFloat(String(v == null ? '' : v).replace(',', '.'));
+      this.goldPrice = price(this.getAttribute('data-gold-price')) || 95.0;     // €/g 24k
+      this.silverPrice = price(this.getAttribute('data-silver-price')) || 2.10; // €/g pure
+      this.donateUrl = this.getAttribute('data-donate-url') || '#';
+      this.accent = this.getAttribute('data-accent') || '#0e7c66';
+      this.render();
+    }
 
     // --- Calculations -----------------------------------------------------
     goldValue() {
