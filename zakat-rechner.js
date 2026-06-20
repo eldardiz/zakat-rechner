@@ -137,9 +137,10 @@
       const amt = Math.round((Number(amount) || 0) * 100) / 100;
       if (amt <= 0) return this.donateUrl;
       const sep = this.donateUrl.includes('?') ? '&' : '?';
-      // Zakat is a one-time obligation → interval=0. amount= prefills the exact
-      // calculated Zakat (FRB Form-Prepopulation-API, editable by donor).
-      return `${this.donateUrl}${sep}amount=${amt.toFixed(2)}&interval=0`;
+      // Zakat is a one-time obligation → interval=0. amount_fix LOCKS the exact
+      // calculated Zakat on the FRB form (verified: sets payment[amount]).
+      // NB: plain amount= is ignored by this form; only amount_fix prefills.
+      return `${this.donateUrl}${sep}amount_fix=${amt.toFixed(2)}&interval=0`;
     }
 
     // --- Render -----------------------------------------------------------
