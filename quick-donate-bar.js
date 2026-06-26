@@ -181,25 +181,25 @@
       .go:hover { background: var(--cta-d); }
       @media (prefers-reduced-motion: reduce) { .go { animation: none; } }
 
-      /* ---- MOBILE: MATW-style full-width vertical stack ---- */
+      /* ---- MOBILE: MATW-style full-width vertical stack (compact) ---- */
       @media (max-width: 767px) {
         .bar { background: var(--accent); border-bottom: 0; }
-        .inner { max-width: 560px; padding: 12px; gap: 9px; align-items: stretch; justify-content: stretch; }
+        .inner { max-width: 560px; padding: 8px; gap: 6px; align-items: stretch; justify-content: stretch; }
         .select { order: 1; flex: 1 1 100%; }
-        .select select { max-width: none; min-width: 0; min-height: 50px; font-size: 15px; padding: 12px 36px 12px 15px; }
-        .select::after { right: 16px; width: 8px; height: 8px; }
-        .amts { order: 2; flex: 1 1 100%; gap: 8px; }
-        .amt { flex: 1 1 0; min-height: 46px; font-size: 14px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; }
-        .rhythm { order: 3; flex: 0 0 auto; padding: 4px; }
-        .rb { min-height: 42px; display: inline-flex; align-items: center; font-size: 14px; padding: 0 18px; }
-        .free { order: 4; flex: 1 1 130px; min-height: 50px; }
-        .free input { width: 100%; font-size: 15px; padding: 13px 8px 13px 15px; }
-        .free .cuk { font-size: 15px; padding: 0 14px; }
-        .pays { order: 5; flex: 1 1 42%; min-width: 0; min-height: 50px; gap: 5px; padding: 7px 7px; justify-content: center; }
-        .pays .pay { font-size: 8.5px; }
-        .pays .paylogo { height: 12px; }
+        .select select { max-width: none; min-width: 0; min-height: 40px; font-size: 13.5px; padding: 9px 30px 9px 12px; }
+        .select::after { right: 13px; width: 7px; height: 7px; }
+        .amts { order: 2; flex: 1 1 100%; gap: 6px; }
+        .amt { flex: 1 1 0; min-height: 38px; font-size: 13px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; }
+        .rhythm { order: 3; flex: 0 0 auto; padding: 3px; }
+        .rb { min-height: 34px; display: inline-flex; align-items: center; font-size: 13px; padding: 0 14px; }
+        .free { order: 4; flex: 1 1 120px; min-height: 40px; }
+        .free input { width: 100%; font-size: 13.5px; padding: 9px 8px 9px 12px; }
+        .free .cuk { font-size: 13.5px; padding: 0 11px; }
+        .pays { order: 5; flex: 1 1 40%; min-width: 0; min-height: 40px; gap: 5px; padding: 6px 7px; justify-content: center; }
+        .pays .pay { font-size: 8px; }
+        .pays .paylogo { height: 11px; }
         .pays .pay.mc i { width: 9px; height: 9px; }
-        .go { order: 6; flex: 1 1 52%; min-width: 0; min-height: 50px; font-size: 14px; padding: 10px 8px; letter-spacing: .02em; }
+        .go { order: 6; flex: 1 1 52%; min-width: 0; min-height: 42px; font-size: 13.5px; padding: 9px 8px; letter-spacing: .02em; }
       }`;
     }
   }
