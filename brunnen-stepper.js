@@ -19,12 +19,11 @@
  */
 (function () {
   const C = [
-    { name: 'Tschad', price: 1000, id: '97072' },
-    { name: 'Kamerun', price: 1000, id: '97073' },
-    { name: 'Burkina Faso', price: 1400, id: '97074' },
-    { name: 'Malawi', price: 1100, id: '97075' },
-    { name: 'Ghana', price: 1600, id: '97076' },
-    { name: 'Togo', price: 1600, id: '97077' },
+    { name: 'Tschad', price: 1200, id: '97072' },
+    { name: 'Kamerun', price: 1200, id: '97073' },
+    { name: 'Malawi', price: 1200, id: '97075' },
+    { name: 'Ghana', price: 1700, id: '97076' },
+    { name: 'Uganda', price: 1700, id: '97268' },
     // Each id = its own "Brunnen <Country>" FRB item, so the backoffice shows the
     // exact country. amount_fix (see href below) locks the amount. To add a well:
     // copy a line and set name / price / id.
