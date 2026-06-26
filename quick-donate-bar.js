@@ -130,45 +130,70 @@
       .bar {
         --accent: ${this.accent};
         --cta: #e23744; --cta-d: #c32c38;
-        --ink: #16232e; --line: #d7e3ee; --soft: #eaf3fb;
+        --ink: #16232e; --line: #d7e3ee; --soft: #eaf3fb; --muted: #6b7785;
         background: var(--soft);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         color: var(--ink); -webkit-font-smoothing: antialiased; width: 100%;
         border-bottom: 1px solid var(--line);
       }
-      .inner { max-width: 1280px; margin: 0 auto; padding: 8px 14px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; justify-content: center; }
-      .rhythm { display: inline-flex; background: #fff; border: 1.5px solid var(--line); border-radius: 8px; padding: 2px; }
-      .rb { border: 0; background: transparent; border-radius: 6px; padding: 5px 9px; font-size: 11.5px; font-weight: 700; color: #6b7785; cursor: pointer; white-space: nowrap; transition: .12s; }
+      .inner { max-width: 1280px; margin: 0 auto; padding: 9px 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+      /* frequency toggle (Einmalig / Monatlich) */
+      .rhythm { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 3px; }
+      .rb { border: 0; background: transparent; border-radius: 6px; padding: 7px 13px; font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; white-space: nowrap; transition: .12s; line-height: 1; }
       .rb.on { background: var(--accent); color: #fff; }
-      .cur { display: inline-flex; align-items: center; gap: 5px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px; font-weight: 700; font-size: 11.5px; white-space: nowrap; }
-      .flag { font-size: 12px; }
-      .free { display: inline-flex; align-items: center; background: #fff; border: 1.5px solid var(--line); border-radius: 8px; overflow: hidden; }
-      .free:focus-within { border-color: var(--accent); }
-      .free input { border: 0; outline: 0; padding: 6px 6px 6px 9px; font-size: 11.5px; width: 68px; background: transparent; color: var(--ink); }
-      .free .cuk { padding: 0 8px; color: #6b7785; align-self: stretch; display: grid; place-items: center; background: var(--soft); font-size: 11.5px; }
-      .amts { display: inline-flex; gap: 5px; }
-      .amt { border: 1.5px solid var(--line); background: #fff; border-radius: 8px; padding: 6px 10px; font-size: 11.5px; font-weight: 700; color: var(--ink); cursor: pointer; transition: .12s; white-space: nowrap; }
-      .amt:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
-      .amt.on { border-color: var(--cta); background: color-mix(in srgb, var(--cta) 8%, #fff); color: var(--cta-d); }
-      .select { position: relative; }
-      .select::after { content: ""; position: absolute; right: 10px; top: 50%; width: 6px; height: 6px; border-right: 2px solid #6b7785; border-bottom: 2px solid #6b7785; transform: translateY(-65%) rotate(45deg); pointer-events: none; }
-      .select select { appearance: none; border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 26px 6px 9px; font-size: 11.5px; background: #fff; color: var(--ink); cursor: pointer; max-width: 175px; min-width: 135px; }
+
+      /* free amount input */
+      .free { display: inline-flex; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+      .free:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent); }
+      .free input { border: 0; outline: 0; padding: 9px 8px 9px 12px; font-size: 13px; width: 84px; background: transparent; color: var(--ink); }
+      .free .cuk { padding: 0 11px; color: var(--muted); align-self: stretch; display: grid; place-items: center; background: var(--soft); font-size: 13px; font-weight: 700; }
+
+      /* amount presets — outlined in CTA colour, solid when selected (MATW look) */
+      .amts { display: inline-flex; gap: 7px; }
+      .amt { border: 1.5px solid var(--cta); background: #fff; border-radius: 8px; padding: 9px 13px; font-size: 13px; font-weight: 700; color: var(--cta); cursor: pointer; transition: .12s; white-space: nowrap; line-height: 1; }
+      .amt:hover { background: color-mix(in srgb, var(--cta) 7%, #fff); }
+      .amt.on { background: var(--cta); border-color: var(--cta); color: #fff; }
+
+      /* purpose dropdown */
+      .select { position: relative; display: inline-flex; }
+      .select::after { content: ""; position: absolute; right: 12px; top: 50%; width: 7px; height: 7px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: translateY(-65%) rotate(45deg); pointer-events: none; }
+      .select select { appearance: none; width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 9px 32px 9px 12px; font-size: 13px; background: #fff; color: var(--ink); cursor: pointer; max-width: 240px; min-width: 150px; font-family: inherit; }
       .select select:focus { outline: 0; border-color: var(--accent); }
-      .pays { display: inline-flex; align-items: center; gap: 5px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; }
+
+      /* payment marks (trust signal) */
+      .pays { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
       .pay { font-size: 9px; font-weight: 800; letter-spacing: .02em; color: #1a3a6b; line-height: 1; }
-      .paylogo { height: 13px; width: auto; display: block; }
+      .paylogo { height: 14px; width: auto; display: block; }
       .pay.pp { color: #003087; font-style: italic; }
       .pay.mc { display: inline-flex; }
-      .pay.mc i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+      .pay.mc i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
       .pay.mc i:first-child { background: #eb001b; }
       .pay.mc i:last-child { background: #f79e1b; margin-left: -4px; mix-blend-mode: multiply; }
-      .go { display: inline-flex; align-items: center; text-align: center; text-decoration: none; background: var(--cta); color: #fff; border-radius: 8px; padding: 8px 15px; font-size: 11.5px; font-weight: 800; transition: .15s; white-space: nowrap; text-transform: uppercase; letter-spacing: .02em; }
+
+      /* CTA */
+      .go { display: inline-flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; background: var(--cta); color: #fff; border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 800; transition: .15s; white-space: nowrap; text-transform: uppercase; letter-spacing: .03em; line-height: 1; }
       .go:hover { background: var(--cta-d); }
-      @media (max-width: 700px) {
-        .inner { gap: 6px; padding: 7px 10px; }
-        .select select { min-width: 130px; }
-        .pays { order: 9; }
-        .go { flex: 1 1 100%; justify-content: center; padding: 10px; }
+
+      /* ---- MOBILE: MATW-style full-width vertical stack ---- */
+      @media (max-width: 767px) {
+        .bar { background: var(--accent); border-bottom: 0; }
+        .inner { max-width: 560px; padding: 12px; gap: 9px; align-items: stretch; justify-content: stretch; }
+        .select { order: 1; flex: 1 1 100%; }
+        .select select { max-width: none; min-width: 0; min-height: 50px; font-size: 15px; padding: 12px 36px 12px 15px; }
+        .select::after { right: 16px; width: 8px; height: 8px; }
+        .amts { order: 2; flex: 1 1 100%; gap: 8px; }
+        .amt { flex: 1 1 0; min-height: 46px; font-size: 14px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; }
+        .rhythm { order: 3; flex: 0 0 auto; padding: 4px; }
+        .rb { min-height: 42px; display: inline-flex; align-items: center; font-size: 14px; padding: 0 18px; }
+        .free { order: 4; flex: 1 1 130px; min-height: 50px; }
+        .free input { width: 100%; font-size: 15px; padding: 13px 8px 13px 15px; }
+        .free .cuk { font-size: 15px; padding: 0 14px; }
+        .pays { order: 5; flex: 1 1 42%; min-width: 0; min-height: 50px; gap: 5px; padding: 7px 7px; justify-content: center; }
+        .pays .pay { font-size: 8.5px; }
+        .pays .paylogo { height: 12px; }
+        .pays .pay.mc i { width: 9px; height: 9px; }
+        .go { order: 6; flex: 1 1 52%; min-width: 0; min-height: 50px; font-size: 14px; padding: 10px 8px; letter-spacing: .02em; }
       }`;
     }
   }
